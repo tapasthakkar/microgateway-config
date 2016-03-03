@@ -1,0 +1,25 @@
+{
+  "name": "edgemicro-config",
+  "version": "1.0.1",
+  "private": true,
+  "description": "Apigee Microgateway Handler",
+  "main": "index.js",
+  "dependencies": {
+    "async": "^1.2.1",
+    "body-parser": "^1.12.4",
+    "config": "^1.13.0",
+    "debug": "^2.2.0",
+    "fs-extra": "^0.26.3",
+    "js-yaml": "^3.4.2",
+    "lodash": "^4.3.0",
+    "request": "^2.69.0",
+    "underscore": "^1.8.3"
+  },
+  "scripts":{
+    "test":"mocha tests"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.4.5"
+  }
+}
