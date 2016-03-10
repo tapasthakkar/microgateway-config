@@ -35,4 +35,5 @@ node_modules
 new-config.yaml
 .vscode
 .DS_Store
+.idea
 
