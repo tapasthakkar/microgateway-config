@@ -1,22 +1,21 @@
 {
   "name": "microgateway-config",
-  "version": "1.0.1",
+  "version": "0.1.2",
   "private": true,
   "description": "Apigee Microgateway Handler",
   "main": "index.js",
   "dependencies": {
-    "async": "^1.2.1",
-    "body-parser": "^1.12.4",
-    "config": "^1.13.0",
+    "async": "^1.5.2",
+    "body-parser": "^1.15.0",
+    "config": "^1.19.0",
     "debug": "^2.2.0",
-    "fs-extra": "^0.26.3",
-    "js-yaml": "^3.4.2",
-    "lodash": "^4.3.0",
-    "request": "^2.69.0",
-    "underscore": "^1.8.3"
+    "fs-extra": "^0.26.6",
+    "js-yaml": "^3.5.4",
+    "lodash": "^4.6.1",
+    "request": "^2.69.0"
   },
-  "scripts":{
-    "test":"mocha tests"
+  "scripts": {
+    "test": "mocha tests"
   },
   "devDependencies": {
     "chai": "^2.3.0",
