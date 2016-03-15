@@ -1,6 +1,6 @@
 {
   "name": "microgateway-config",
-  "version": "1.0.1",
+  "version": "0.1.1",
   "private": true,
   "description": "Apigee Microgateway Handler",
   "main": "index.js",
@@ -14,8 +14,8 @@
     "lodash": "^4.3.0",
     "request": "^2.69.0"
   },
-  "scripts":{
-    "test":"mocha tests"
+  "scripts": {
+    "test": "mocha tests"
   },
   "devDependencies": {
     "chai": "^2.3.0",
