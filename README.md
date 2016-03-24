@@ -1,6 +1,6 @@
-#apigee config module
+#apigee microgateway config module
 
-this module takes a source config and copies it to a target location
+this module takes a source config yaml and and returns a merged config from the network
 inorder to use its recommended you work in this order
 
 1. call the init function which will copy a source example and save to a target location
@@ -9,7 +9,7 @@ inorder to use its recommended you work in this order
 4. call load to load an existing config from disk
 
 api looks like this
-
+```javascript
 {
     get:function(options,cb){
       /**
@@ -43,3 +43,4 @@ api looks like this
      
     }
   };
+  ```
