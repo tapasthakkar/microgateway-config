@@ -9,7 +9,7 @@ inorder to use its recommended you work in this order
 4. call load to load an existing config from disk
 
 api looks like this
-
+```javascript
 {
     get:function(options,cb){
       /**
@@ -43,3 +43,4 @@ api looks like this
      
     }
   };
+  ```
