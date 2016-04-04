@@ -1,6 +1,6 @@
 {
   "name": "microgateway-config",
-  "version": "0.1.7",
+  "version": "2.0.0",
   "private": true,
   "description": "Apigee Microgateway Handler",
   "main": "index.js",
