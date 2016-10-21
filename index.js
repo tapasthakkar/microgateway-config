@@ -1,5 +1,4 @@
 var io = require('./lib/io');
-var network = require('./lib/network');
 var path = require('path');
 var os = require('os')
 var apid = require('./lib/apid');
@@ -15,14 +14,6 @@ module.exports = function(){
        * @param callback function(err){}
        */
       return apidInstance.get(options,cb)
-    },
-    init:function(options, cb){
-      /**
-       * initializes the config based on a source config, this must be called first
-       * @param options {source,targetDir,targetFile}
-       * @param cb function(err,configpath)
-       */
-      return null;//ioInstance.initConfig(options,cb)
     },
     load:function(options){
       /**
