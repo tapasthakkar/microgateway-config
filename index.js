@@ -7,13 +7,16 @@ module.exports = function(){
   var ioInstance = io();
   var apidInstance = apid();
   return {
-    get:function(options,cb){
+    get:function(options,cb, clientSocket){
       /**
        * load the config from apid and merge with default config
        * @param options {target:save location and filename,keys: {key:,secret:},source:default loading target}
        * @param callback function(err){}
        */
       return apidInstance.get(options,cb)
+    },
+    setRefreshing(clientSocket) {
+      apidInstance.beginLongPoll(clientSocket);
     },
     load:function(options){
       /**
