@@ -14,8 +14,8 @@ module.exports = [
         "updatedBy":"mdobs",
         "uri": "file://./tests/bundle2.zip",
         "configurationJson": {
-          "PropA": "aaa",
-          "PropSCOPE_LEVEL": "aaa1"
+          "PropBUNDLE_LEVEL": "scope1bundle2prop",
+          "PropSCOPE_LEVEL": "scope1prop"
         }
       },
       {
@@ -26,8 +26,41 @@ module.exports = [
         "updatedBy":"mdobs",
         "uri": "file://./tests/bundle1.zip",
         "configurationJson": {
-          "PropA": "aaab",
-          "PropSCOPE_LEVEL": "aaa2"
+          "PropBUNDLE_LEVEL": "scope1bundle1prop",
+          "PropSCOPE_LEVEL": "scope1prop"
+        }
+      }
+    ]
+  },
+  {
+    "scopeuuid": "GHIJKL",
+    "created":"1481917900",
+    "updated":"1481917900",
+    "createdBy":"fierrom",
+    "updatedBy":"fierrom",
+    "bundles": [
+      {
+        "displayName": "secondscopebundle1",
+        "created":"1481917061",
+        "updated":"1481917061",
+        "createdBy":"fierrom",
+        "updatedBy":"fierrom",
+        "uri": "file://./tests/bundle2.zip",
+        "configurationJson": {
+          "PropBUNDLE_LEVEL": "scope2bundle2prop",
+          "PropSCOPE_LEVEL": "scope2prop"
+        }
+      },
+      {
+        "displayName": "secondscopebundle2",
+        "created":"1481917061",
+        "updated":"1481917061",
+        "createdBy":"fierrom",
+        "updatedBy":"fierrom",
+        "uri": "file://./tests/bundle1.zip",
+        "configurationJson": {
+          "PropBUNDLE_LEVEL": "scop21bundle1prop",
+          "PropSCOPE_LEVEL": "scope2prop"
         }
       }
     ]

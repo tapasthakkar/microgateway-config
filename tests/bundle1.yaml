@@ -1,9 +1,11 @@
-edgemicro_hello:
+edgemicro_whatsup:
   revision: '15'
   proxy_name: 'default'
   base_path: '/iloveapis'
   target_name: 'default'
   url: 'http://mocktarget.apigee.net/'
+  PropBUNDLE_LEVEL: {{PropBUNDLE_LEVEL}}
+  PropSCOPE_LEVEL: {{PropSCOPE_LEVEL}}
   vhost: myvhost
   plugins:
     - analytics

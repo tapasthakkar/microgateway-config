@@ -18,8 +18,6 @@ describe('library basic functions', function () {
   })
 
   it('assembles a configuration correctly', function (done) {
-    //const config = configlib().get();
-    //console.log("Recieved config object: ", config);
     var Apid = require('../lib/apid');
     var apidLib = new Apid();
     fs.writeFileSync('output-test', apidLib.stitch(require('./configdir/sample_deployments_response.js')));

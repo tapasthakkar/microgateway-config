@@ -1,10 +1,11 @@
 edgemicro_hello:
-  revision: '15'
-  proxy_name: 'default'
-  base_path: '/iloveapis'
-  target_name: 'default'
+  revision: '16'
+  proxy_name: 'proxy2'
+  base_path: '/ilikeapis'
+  target_name: 'target2'
   url: 'http://mocktarget.apigee.net/'
-  vhost: myvhost
+  PropBUNDLE_LEVEL: {{PropBUNDLE_LEVEL}}
+  PropSCOPE_LEVEL: {{PropSCOPE_LEVEL}}
+  vhost: myvhost2
   plugins:
-    - analytics
     - spikearrest
