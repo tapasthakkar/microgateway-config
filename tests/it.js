@@ -1,4 +1,4 @@
-'use strict'
+/*'use strict'
 var assert = require('assert');
 var configlib = require('../index');
 
@@ -34,4 +34,4 @@ describe('library basic functions', function () {
       done();
     });
   });
-});
+});*/
