@@ -1,7 +1,10 @@
 'use strict'
+
 var assert = require('assert');
-var configlib = require('../index');
 var fs = require('fs');
+var assert = require('assert');
+var path = require('path')
+
 
 describe('library basic functions', function () {
   before((done) => {
@@ -20,7 +23,9 @@ describe('library basic functions', function () {
   it('assembles a configuration correctly', function (done) {
     var Apid = require('../lib/apid');
     var apidLib = new Apid();
-    fs.writeFileSync('output-test', apidLib.stitch(require('./configdir/sample_deployments_response.js')));
+    const stitchedConfig = apidLib.stitch(require('./configdir/sample_deployments_response.js'));
+    console.log('Stitched config:\n', stitchedConfig)
+    assert.equal(stitchedConfig, fs.readFileSync(path.join(__dirname, './output-expected')));
     done();
   })
 });
