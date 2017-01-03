@@ -4,7 +4,7 @@ var configlib = require('../index');
 var fs = require('fs');
 
 describe('library basic functions', function () {
-  /*before((done) => {
+  before((done) => {
     var http = require('http');
     const PORT=9090;
     function handleRequest(request, response){
@@ -13,8 +13,9 @@ describe('library basic functions', function () {
     var server = http.createServer(handleRequest);
     server.listen(PORT, function(){
       console.log("Test apid server listening on: http://localhost:%s", PORT);
+      done();
     });
-  })*/
+  })
 
   it('assembles a configuration correctly', function (done) {
     //const config = configlib().get();

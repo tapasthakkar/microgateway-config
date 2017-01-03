@@ -15,7 +15,7 @@ module.exports = [
         "uri": "file://./tests/bundle2.zip",
         "configurationJson": {
           "PropA": "aaa",
-          "PropSCOPE_LEVEL": "aaa"
+          "PropSCOPE_LEVEL": "aaa1"
         }
       },
       {
@@ -27,7 +27,7 @@ module.exports = [
         "uri": "file://./tests/bundle1.zip",
         "configurationJson": {
           "PropA": "aaab",
-          "PropSCOPE_LEVEL": "aaa"
+          "PropSCOPE_LEVEL": "aaa2"
         }
       }
     ]
