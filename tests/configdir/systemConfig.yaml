@@ -1,0 +1,29 @@
+system:
+  logging:
+    level: error
+    dir: /var/tmp
+    stats_log_interval: 60
+    rotate_interval: 24
+  port: 8000
+  max_connections: 1000
+  max_connections_hard: 5000
+  restart_sleep: 500
+  restart_max: 50
+  max_times: 300
+  vhosts:
+    myvhost:
+      vhost: www.myhost.com:9000
+      cert: /path/to/cert
+headers:
+  x-forwarded-for: true
+  x-forwarded-host: true
+  x-request-id: true
+  x-response-time: true
+  via: true
+analytics:
+  uri: >-
+    https://edgemicroservices-us-east-1.apigee.net/edgemicro/axpublisher/organization/ws-poc3/environment/test
+spikearrest:
+  timeUnit: minute
+  allow: 10
+  buffersize: 0
