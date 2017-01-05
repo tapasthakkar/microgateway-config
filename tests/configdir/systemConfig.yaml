@@ -20,9 +20,6 @@ headers:
   x-request-id: true
   x-response-time: true
   via: true
-analytics:
-  uri: >-
-    https://edgemicroservices-us-east-1.apigee.net/edgemicro/axpublisher/organization/ws-poc3/environment/test
 spikearrest:
   timeUnit: minute
   allow: 10
