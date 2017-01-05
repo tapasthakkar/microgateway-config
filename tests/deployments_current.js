@@ -25,8 +25,7 @@ describe('library basic functions', function () {
     var Apid = require('../lib/apid');
     var apidLib = new Apid();
     const stitchedConfig = apidLib.stitch(require('./configdir/sample_deployments_response.js'));
-    console.log('Stitched config:\n', util.inspect(stitchedConfig, {depth: null }))
-    assert.equal(stitchedConfig, fs.readFileSync(path.join(__dirname, './output-expected')));
+    assert.equal(stitchedConfig, fs.readFileSync(path.join(__dirname, './output-expected')).toString());
     done();
   })
 
