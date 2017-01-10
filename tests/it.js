@@ -26,10 +26,10 @@ describe('library basic functions', function () {
   });
   it('index loads from server', function (done) {
     var keys = {
-      key: "ae686bcfe929f2392c8e13dffa3b46b815216fe64ac1b43e2868b3f74878c2a1",
-      secret: "4ee8bc8463729df390e60587748a67b33b84d309143438aa98dcf4f259f38832"
+      key: process.env.EDGEMICRO_KEY,
+      secret: process.env.EDGEMICRO_SECRET
     }
-    configlib.get({source:'./tests/config.yaml',target:getPath,keys:keys}, function (err,config) {
+    configlib.get({source:'./tests/ws-poc3-test-config.yaml',target:getPath,keys:keys}, function (err,config) {
       assert(config, 'does not have config')
       done();
     });
