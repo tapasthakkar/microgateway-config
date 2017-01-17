@@ -7,6 +7,12 @@ var mockRequest = require('./mock-request');
 var target = './tests/configdir/new-config.yaml';
 var getPath = '';
 
+var configlibmock = proxyquire.load('../index.js', {
+  './lib/network': proxyquire.load('../lib/network', {
+    'request': mockRequest
+  })
+});
+
 describe('library basic functions', function () {
   it('loads from disk', function (done) {
     var config = configlib.load({source:'./tests/config.yaml'});
@@ -28,23 +34,25 @@ describe('library basic functions', function () {
   });
   it('index loads from server', function (done) {
     var keys = {
-      key: process.env.EDGEMICRO_KEY,
-      secret: process.env.EDGEMICRO_SECRET
+      key: process.env.EDGEMICRO_KEY || 'mYt3sTk3Y',
+      secret: process.env.EDGEMICRO_SECRET || 'mYt3sTs3Cr3T'
     }
-    configlib.get({source:'./tests/ws-poc3-test-config.yaml',target:getPath,keys:keys}, function (err,config) {
-      assert(config, 'does not have config')
-      done();
-    });
+    if(process.env.EDGEMICRO_KEY && process.env.EDGEMICRO_SECRET) {
+      configlib.get({source:'./tests/configdir/my-config.yaml',target:getPath,keys:keys}, function (err,config) {
+        assert(config, 'does not have config')
+        done();
+      });
+    } else {
+      configlibmock.get({source:'./tests/configdir/test-config.yaml',target:getPath,keys:keys}, function (err,config) {
+        assert(config, 'does not have config')
+        done();
+      });
+    }
   });
   it('filters proxies and products', function (done) {
-    var configlibmock = proxyquire.load('../index.js', {
-      './lib/network': proxyquire.load('../lib/network', {
-        'request': mockRequest
-      })
-    });
     var keys = {
-      key: process.env.EDGEMICRO_KEY || '123abc',
-      secret: process.env.EDGEMICRO_SECRET || '123abc'
+      key: 'mYt3sTk3Y',
+      secret: 'mYt3sTs3Cr3T'
     }
     configlibmock.get({source:'./tests/configdir/test-config.yaml',target:getPath,keys:keys}, function (err,config) {
       assert(config, 'does not have config');

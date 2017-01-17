@@ -46,10 +46,10 @@ api looks like this
   ```
 
 ## testing
-some of the tests associated with this project require you to provide your own configuration along with a secret and key. An example of how run the test suite locally is as follows:
+while the entire test suite for this project can be tested without any external dependencies, you may want to run tests using your own microgateway configuration. Here's an example of how to do this:
 
 ```sh
-cp /path/to/your/config.yaml ./tests/ws-poc3-test-config.yaml
+cp /path/to/your/config.yaml ./tests/configdir/my-config.yaml
 EDGEMICRO_KEY=< your edgemicro key >
 EDGEMICRO_SECRET=< your edgemicro secret >
 npm test
