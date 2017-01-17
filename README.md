@@ -17,7 +17,7 @@ api looks like this
        * @param options {target:save location and filename,keys: {key:,secret:},source:default loading target}
        * @param callback function(err){}
        */
-     
+
     },
     init:function(options, cb){
       /**
@@ -25,7 +25,7 @@ api looks like this
        * @param options {source,targetDir,targetFile}
        * @param cb function(err,configpath)
        */
-    
+
     },
     load:function(options){
       /**
@@ -40,7 +40,17 @@ api looks like this
        * @param config to save
        * @param target destination
        */
-     
+
     }
   };
   ```
+
+## testing
+some of the tests associated with this project require you to provide your own configuration along with a secret and key. An example of how run the test suite locally is as follows:
+
+```sh
+cp /path/to/your/config.yaml ./tests/ws-poc3-test-config.yaml
+EDGEMICRO_KEY=< your edgemicro key >
+EDGEMICRO_SECRET=< your edgemicro secret >
+npm test
+```

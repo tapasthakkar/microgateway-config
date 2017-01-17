@@ -1,6 +1,8 @@
 'use strict'
 var assert = require('assert');
 var configlib = require('../index');
+var proxyquire = require('proxyquire');
+var mockRequest = require('./mock-request');
 
 var target = './tests/configdir/new-config.yaml';
 var getPath = '';
@@ -31,6 +33,27 @@ describe('library basic functions', function () {
     }
     configlib.get({source:'./tests/ws-poc3-test-config.yaml',target:getPath,keys:keys}, function (err,config) {
       assert(config, 'does not have config')
+      done();
+    });
+  });
+  it('filters proxies and products', function (done) {
+    var configlibmock = proxyquire.load('../index.js', {
+      './lib/network': proxyquire.load('../lib/network', {
+        'request': mockRequest
+      })
+    });
+    var keys = {
+      key: process.env.EDGEMICRO_KEY || '123abc',
+      secret: process.env.EDGEMICRO_SECRET || '123abc'
+    }
+    configlibmock.get({source:'./tests/configdir/test-config.yaml',target:getPath,keys:keys}, function (err,config) {
+      assert(config, 'does not have config');
+      assert.equal(config.proxies[0].name, 'edgemicro_proxyOne', 'proxy not as expected');
+      assert.equal(config.proxies[1].name, 'edgemicro_proxyTwo', 'proxy not as expected');
+      assert.deepEqual(config.product_to_proxy, {
+        productOne: [ 'edgemicro_proxyOne', 'edgemicro_proxyTwo' ],
+        productTwo: [ 'edgemicro_proxyOne', 'edgemicro_proxyThree' ]
+      }, 'products not as expected');
       done();
     });
   });
