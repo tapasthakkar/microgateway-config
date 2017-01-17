@@ -17,7 +17,7 @@ api looks like this
        * @param options {target:save location and filename,keys: {key:,secret:},source:default loading target}
        * @param callback function(err){}
        */
-     
+
     },
     init:function(options, cb){
       /**
@@ -25,7 +25,7 @@ api looks like this
        * @param options {source,targetDir,targetFile}
        * @param cb function(err,configpath)
        */
-    
+
     },
     load:function(options){
       /**
@@ -40,7 +40,17 @@ api looks like this
        * @param config to save
        * @param target destination
        */
-     
+
     }
   };
   ```
+
+## testing
+while the entire test suite for this project can be tested without any external dependencies, you may want to run tests using your own microgateway configuration. Here's an example of how to do this:
+
+```sh
+cp /path/to/your/config.yaml ./tests/configdir/my-config.yaml
+EDGEMICRO_KEY=< your edgemicro key >
+EDGEMICRO_SECRET=< your edgemicro secret >
+npm test
+```
