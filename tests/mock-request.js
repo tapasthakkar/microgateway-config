@@ -41,12 +41,12 @@ var products = {
         }
       ],
       "createdAt" : 123456789,
-      "createdBy" : "test@test.com",
+      "createdBy" : "test@example.com",
       "description" : "",
       "displayName" : "productOne",
       "environments" : [ "test" ],
       "lastModifiedAt" : 123456789,
-      "lastModifiedBy" : "test@test.com",
+      "lastModifiedBy" : "test@example.com",
       "name" : "productOne",
       "proxies" : [ "edgemicro_proxyOne", "edgemicro_proxyTwo" ],
       "scopes" : [ "" ]
@@ -61,12 +61,12 @@ var products = {
         }
       ],
       "createdAt" : 123456789,
-      "createdBy" : "test@test.com",
+      "createdBy" : "test@example.com",
       "description" : "",
       "displayName" : "productTwo",
       "environments" : [ "test" ],
       "lastModifiedAt" : 123456789,
-      "lastModifiedBy" : "test@test.com",
+      "lastModifiedBy" : "test@example.com",
       "name" : "productTwo",
       "proxies" : [ "edgemicro_proxyOne", "edgemicro_proxyThree" ],
       "scopes" : [ "" ]
@@ -81,12 +81,12 @@ var products = {
         }
       ],
       "createdAt" : 123456789,
-      "createdBy" : "test@test.com",
+      "createdBy" : "test@example.com",
       "description" : "",
       "displayName" : "productThree",
       "environments" : [ "test" ],
       "lastModifiedAt" : 123456789,
-      "lastModifiedBy" : "test@test.com",
+      "lastModifiedBy" : "test@example.com",
       "name" : "productThree",
       "proxies" : [ "edgemicro_proxyThree", "edgemicro_proxyFour" ],
       "scopes" : [ "" ]
