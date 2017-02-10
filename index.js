@@ -15,8 +15,8 @@ module.exports = function(){
        */
       return apidInstance.get(options,cb)
     },
-    setRefreshing(clientSocket) {
-      apidInstance.beginLongPoll(clientSocket);
+    setRefreshing(clientSocket, pollInterval) {
+      apidInstance.beginLongPoll(clientSocket, pollInterval);
     },
     load:function(options){
       /**
