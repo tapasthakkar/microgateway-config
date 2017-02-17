@@ -11,7 +11,6 @@ describe('library basic functions', function () {
   before((done) => {
     var http = require('http');
     function handleRequest(request, response){
-      console.log(JSON.stringify(require('./configdir/sample_deployments_response.js')));
       response.end(JSON.stringify(require('./configdir/sample_deployments_response.js')));
     }
     var server = http.createServer(handleRequest);
@@ -33,8 +32,19 @@ describe('library basic functions', function () {
     var Apid = require('../lib/apid');
     var apidLib = new Apid();
     apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://localhost:'+PORT}, (err, stitchedConfig) => {
-      console.log('Unified config:\n', util.inspect(stitchedConfig, {depth: null }));
-      //TODO do some checks here
+      assert.equal(stitchedConfig.proxies.length, 4);
+      assert.equal(stitchedConfig.system.port, 8000);
+      assert.equal(stitchedConfig.system.vhosts.myvhost.vhost, 'www.myhost.com:9000');
+      assert.equal(stitchedConfig.system.vhosts.myvhost.cert, '/path/to/cert');
+      done();
+    });
+  })
+
+  it('calls back with an error if cannot connect to apid endpoint', function (done) {
+    var Apid = require('../lib/apid');
+    var apidLib = new Apid();
+    apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://foo:'+PORT}, (err, stitchedConfig) => {
+      assert.equal(err.code, 'ENOTFOUND')
       done();
     });
   })
