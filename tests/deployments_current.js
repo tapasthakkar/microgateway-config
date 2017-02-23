@@ -58,6 +58,9 @@ describe('library basic functions', function () {
         request.on('end', () => {
           var body = JSON.parse(buf.toString());
           assert.equal(body.length, 4);
+          body.forEach((status) => {
+            assert.equal(status.status, 'SUCCESS');
+          })
           response.writeHead(200);
           response.end();
           done();
@@ -75,6 +78,44 @@ describe('library basic functions', function () {
         assert.equal(stitchedConfig.system.port, 8000);
         assert.equal(stitchedConfig.system.vhosts.myvhost.vhost, 'www.myhost.com:9000');
         assert.equal(stitchedConfig.system.vhosts.myvhost.cert, '/path/to/cert');
+      });
+    })
+  })
+
+  it('calls back with an error if there is an issue with a deployment', function (done) {
+
+    
+    function handleRequest(request, response){
+      if(request.method == 'GET') {
+        response.end(JSON.stringify(require('./configdir/sample_bad_deployments')));
+      } else {
+
+        var buf = [];
+
+        request.on('data', (d)=>{
+          buf += d;
+        });
+
+        request.on('end', () => {
+          var body = JSON.parse(buf.toString());
+          assert.equal(body.length, 6);
+          body.forEach((status) => {
+            assert.equal(status.status, 'FAIL');
+          })
+          response.writeHead(200);
+          response.end();
+          done();
+        })
+        
+      }
+      
+    }
+
+    createServer(handleRequest, () => {
+      var Apid = require('../lib/apid');
+      var apidLib = new Apid();
+      apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://localhost:'+PORT}, (err, stitchedConfig) => {
+        assert.equal(err.message, 'config does not exist');
       });
     })
   })
