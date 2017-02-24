@@ -277,3 +277,82 @@ describe('long polling errors', () => {
     })
   })
 })
+
+describe('long polling full replace', () => {
+  afterEach(() => {
+    if(server) {
+      server.close();
+    }
+  })
+
+  it('will fully replaced deployments', (done) => {
+    var port = 9092;
+    var count = 0;
+    function handleRequest(request, response){
+      
+      if(request.method == 'GET') {
+        if(count == 0) {
+          response.end(JSON.stringify(require('./configdir/sample_deployments_response')));
+          count++;
+        } else if(count == 1) {
+          setTimeout(() => {
+            response.end(JSON.stringify(require('./configdir/sample_different_deployments')));
+            count++;
+          }, 250)
+          
+        }
+        
+        
+      } else {
+        var buf = [];
+
+        request.on('data', (d)=>{
+          buf += d;
+        });
+
+        request.on('end', () => {
+          var body = JSON.parse(buf.toString());
+          console.log(body);
+          if(count == 1) {
+            assert.equal(body.length, 4);
+            body.forEach((status) => {
+              assert.equal(status.status, 'SUCCESS');
+            })
+          } else {
+            assert.equal(body.length, 4);
+            body.forEach((status) => {
+              assert.equal(status.status, 'SUCCESS');
+            })
+            done();
+          }
+          
+          response.writeHead(200);
+          response.end();
+          
+        })
+        
+      }
+      
+    }
+
+    createServer(handleRequest, port, () => {
+      var Apid = require('../lib/apid');
+      var apidLib = new Apid();
+
+      var mockClientSocket = {
+        sendMessage: function(message) {
+          var config = JSON.parse(process.env.CONFIG);
+          assert.equal(config.proxies.length, 4);
+          var scopes = Object.keys(config.scopes);
+          assert.equal(scopes.length, 2);
+          assert.ok(config['analytics-apid'])
+        }
+      }
+
+      
+      apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://localhost:'+port}, (err, stitchedConfig) => {
+        apidLib.beginLongPoll(mockClientSocket, 100)
+      });
+    })
+  })
+})

@@ -7,7 +7,7 @@ module.exports = [
     "updated":"1481917061",
     "createdBy":"mdobs",
     "updatedBy":"mdobs",
-    "uri": "file://./bundle2.zip",
+    "uri": "file://./tests/bundle2.zip",
     "configuration": {
       "PropBUNDLE_LEVEL": "scope1bundle2prop",
       "PropSCOPE_LEVEL": "scope1prop"
@@ -21,7 +21,7 @@ module.exports = [
     "updated":"1481917061",
     "createdBy":"mdobs",
     "updatedBy":"mdobs",
-    "uri": "file://./bundle1.zip",
+    "uri": "file://./tests/bundle1.zip",
     "configuration": {
       "PropBUNDLE_LEVEL": "scope1bundle1prop",
       "PropSCOPE_LEVEL": "scope1prop"
@@ -35,7 +35,7 @@ module.exports = [
     "updated":"1481917061",
     "createdBy":"mdobs",
     "updatedBy":"mdobs",
-    "uri": "file://./bundle2.zip",
+    "uri": "file://./tests/bundle2.zip",
     "configuration": {
       "PropBUNDLE_LEVEL": "scope2bundle2prop",
       "PropSCOPE_LEVEL": "scope2prop"
@@ -49,7 +49,7 @@ module.exports = [
     "updated":"1481917061",
     "createdBy":"mdobs",
     "updatedBy":"mdobs",
-    "uri": "file://./bundle1.zip",
+    "uri": "file://./tests/bundle1.zip",
     "configuration": {
       "PropBUNDLE_LEVEL": "scop21bundle1prop",
       "PropSCOPE_LEVEL": "scope2prop"
