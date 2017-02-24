@@ -9,11 +9,11 @@ const PORT=9090;
 
 var server;
 
-function createServer(handler, cb) {
+function createServer(handler, port, cb) {
   var http = require('http');
   
   server = http.createServer(handler);
-  server.listen(PORT, function(){
+  server.listen(port, function(){
     console.log("Test apid server listening on: http://localhost:%s", PORT);
     cb()
   });
@@ -27,17 +27,28 @@ describe('library basic functions', function () {
   })
 
   it('stitches together bundles correctly', function (done) {
+    var Apid = require('../lib/apid');
+    var apidLib = new Apid();
+    const stitchedConfig = apidLib.stitch(require('./configdir/sample_deployments_response.js'));
+    assert.equal(stitchedConfig, fs.readFileSync(path.join(__dirname, './output-expected')).toString());
+    done();
+  })
+
+  it('sends back an error with an empty body', function (done) {
 
     function handleRequest(request, response){
-      response.end(JSON.stringify(require('./configdir/sample_deployments_response.js')));
+      if(request.method == 'GET') {
+        response.end(JSON.stringify([]));
+      } 
     }
 
-    createServer(handleRequest, () => {
+    createServer(handleRequest, PORT, () => {
       var Apid = require('../lib/apid');
       var apidLib = new Apid();
-      const stitchedConfig = apidLib.stitch(require('./configdir/sample_deployments_response.js'));
-      assert.equal(stitchedConfig, fs.readFileSync(path.join(__dirname, './output-expected')).toString());
-      done();
+      apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://localhost:'+PORT}, (err, stitchedConfig) => {
+        assert.equal(err.message, 'No deployments found');
+        done()
+      });
     })
   })
 
@@ -70,7 +81,7 @@ describe('library basic functions', function () {
       
     }
 
-    createServer(handleRequest, () => {
+    createServer(handleRequest, PORT, () => {
       var Apid = require('../lib/apid');
       var apidLib = new Apid();
       apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://localhost:'+PORT}, (err, stitchedConfig) => {
@@ -111,7 +122,7 @@ describe('library basic functions', function () {
       
     }
 
-    createServer(handleRequest, () => {
+    createServer(handleRequest, PORT, () => {
       var Apid = require('../lib/apid');
       var apidLib = new Apid();
       apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://localhost:'+PORT}, (err, stitchedConfig) => {
@@ -167,7 +178,7 @@ describe('Long polling', ()=>{
       
     }
 
-    createServer(handleRequest, () => {
+    createServer(handleRequest, PORT, () => {
       var Apid = require('../lib/apid');
       var apidLib = new Apid();
       apidLib.apidEndpoint =  'http://localhost:'+PORT+'/deployments';
@@ -194,9 +205,9 @@ describe('long polling errors', () => {
       server.close();
     }
   })
-  
+
   it('will report only errored deployments', (done) => {
-    
+    var port = 9091;
     var count = 0;
     function handleRequest(request, response){
       
@@ -245,7 +256,7 @@ describe('long polling errors', () => {
       
     }
 
-    createServer(handleRequest, () => {
+    createServer(handleRequest, port, () => {
       var Apid = require('../lib/apid');
       var apidLib = new Apid();
 
@@ -260,7 +271,7 @@ describe('long polling errors', () => {
       }
 
       
-      apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://localhost:'+PORT}, (err, stitchedConfig) => {
+      apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://localhost:'+port}, (err, stitchedConfig) => {
         apidLib.beginLongPoll(mockClientSocket, 100)
       });
     })
