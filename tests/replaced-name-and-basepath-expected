@@ -1,0 +1,21 @@
+scopes:
+  ABCDEF:
+    proxies:
+      abc123:
+        revision: '15'
+        proxy_name: 'default'
+        base_path: /abc123
+        target_name: 'default'
+        url: 'http://mocktarget.apigee.net/'
+        vhost: myvhost
+        plugins:
+          - verify-api-key
+      abc123_2:
+        revision: '15'
+        proxy_name: 'default'
+        base_path: /abc123_2
+        target_name: 'default'
+        url: 'http://mocktarget.apigee.net/'
+        vhost: myvhost
+        plugins:
+          - verify-api-key
