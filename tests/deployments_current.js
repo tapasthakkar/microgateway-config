@@ -34,6 +34,14 @@ describe('library basic functions', function () {
     done();
   })
 
+  it.only('stitches together bundles correctly, and replaces properties like their name', function (done) {
+    var Apid = require('../lib/apid');
+    var apidLib = new Apid();
+    const stitchedConfig = apidLib.stitch(require('./configdir/sample_url_and_name_replace_deployment.js'));
+    assert.equal(stitchedConfig, fs.readFileSync(path.join(__dirname, './replaced-name-and-basepath-expected')).toString());
+    done();
+  })
+
   it('sends back an error with an empty body', function (done) {
 
     function handleRequest(request, response){
