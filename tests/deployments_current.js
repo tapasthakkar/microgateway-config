@@ -5,6 +5,7 @@ var fs = require('fs');
 var assert = require('assert');
 var path = require('path')
 const util = require('util');
+const yaml = require('js-yaml');
 const PORT=9090;
 
 var server;
@@ -34,12 +35,25 @@ describe('library basic functions', function () {
     done();
   })
 
-  it.only('stitches together bundles correctly, and replaces properties like their name', function (done) {
+  it('stitches together bundles correctly, and replaces properties like their name', function (done) {
     var Apid = require('../lib/apid');
     var apidLib = new Apid();
     const stitchedConfig = apidLib.stitch(require('./configdir/sample_url_and_name_replace_deployment.js'));
     assert.equal(stitchedConfig, fs.readFileSync(path.join(__dirname, './replaced-name-and-basepath-expected')).toString());
     done();
+  })
+
+  it('Stitching can potentially build yaml that when parsed will throw an error', function (done) {
+    var Apid = require('../lib/apid');
+    var apidLib = new Apid();
+    try {
+      const stitchedConfig = apidLib.stitch(require('./configdir/sample_bad_duplicate_config'));
+      yaml.safeLoad(stitchedConfig);
+    } catch(e) {
+      assert.equal(e.name, 'YAMLException');
+      assert.equal(e.reason, 'duplicated mapping key');
+      done();
+    }
   })
 
   it('sends back an error with an empty body', function (done) {
