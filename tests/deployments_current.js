@@ -255,7 +255,6 @@ describe('long polling errors', () => {
 
         request.on('end', () => {
           var body = JSON.parse(buf.toString());
-          console.log(body);
           if(count == 1) {
             assert.equal(body.length, 4);
             body.forEach((status) => {
@@ -364,6 +363,7 @@ describe('long polling full replace', () => {
       var mockClientSocket = {
         sendMessage: function(message) {
           var config = JSON.parse(process.env.CONFIG);
+          assert.equal(config.system.port, 8000);
           assert.equal(config.proxies.length, 4);
           var scopes = Object.keys(config.scopes);
           assert.equal(scopes.length, 2);
