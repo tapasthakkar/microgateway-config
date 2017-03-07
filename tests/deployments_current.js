@@ -60,7 +60,8 @@ describe('library basic functions', function () {
 
     function handleRequest(request, response){
       if(request.method == 'GET') {
-        response.end(JSON.stringify([]));
+        response.writeHead(404)
+        response.end();
       } 
     }
 
@@ -68,7 +69,8 @@ describe('library basic functions', function () {
       var Apid = require('../lib/apid');
       var apidLib = new Apid();
       apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://localhost:'+PORT}, (err, stitchedConfig) => {
-        assert.equal(err.message, 'No deployments found');
+        assert.equal(stitchedConfig.proxies.length, 0);
+        assert.equal(stitchedConfig.scopes, null);
         done()
       });
     })
