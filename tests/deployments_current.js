@@ -397,7 +397,9 @@ describe('long polling full replace', () => {
     var apidLib = new Apid();
     var config = require('./configdir/bad_proxy_config');
     
-    apidLib._basicValidation(config, (err, valid) => {
+    apidLib._basicValidation(config, (err, valid, invalidConfig) => {
+      assert.equal(invalidConfig.base_path, '/iloveapis')
+      assert.equal(invalidConfig.vhost, 'myvhost')
       assert.equal(valid, false);
       done();
     });
