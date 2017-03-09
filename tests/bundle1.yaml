@@ -6,7 +6,7 @@ edgemicro_whatsup:
   url: 'http://mocktarget.apigee.net/'
   PropBUNDLE_LEVEL: {{PropBUNDLE_LEVEL}}
   PropSCOPE_LEVEL: {{PropSCOPE_LEVEL}}
-  vhost: myvhost
+  vhost: {{vhost}}
   plugins:
     - analytics
     - spikearrest

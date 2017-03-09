@@ -10,7 +10,8 @@ module.exports = [
     "uri": "file://./tests/bundle5.zip",
     "configuration": {
       "name": "abc123",
-      "basepath": "/abc123"
+      "basepath": "/abc123",
+      "vhost": "vhost"
     }
   },
   {
@@ -24,7 +25,8 @@ module.exports = [
     "uri": "file://./tests/bundle5.zip",
     "configuration": {
       "name": "abc123_2",
-      "basepath": "/abc123_2"
+      "basepath": "/abc123_2",
+      "vhost":"vhost"
     }
   }
 ]
