@@ -35,6 +35,31 @@ describe('library basic functions', function () {
     done();
   })
 
+  it('will not stitch together invalid config. It will pass back an error and empty config', (done)=>{
+    
+    function handleRequest(request, response){
+      if(request.method == 'GET') {
+        response.end(JSON.stringify(require('./configdir/sample_duplicate_config_response.js')));
+      } 
+    }
+
+    createServer(handleRequest, PORT, () => {
+      var Apid = require('../lib/apid');
+      var apidLib = new Apid();
+      apidLib.get({
+        systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), 
+        apidEndpoint: 'http://localhost:'+PORT
+      }, (err, stitchedConfig) => {
+        assert.ok(err);
+        assert.equal(stitchedConfig.proxies.length, 0);
+        assert.equal(stitchedConfig.system.port, 8000);
+        assert.equal(stitchedConfig.system.vhosts.myvhost.vhost, 'www.myhost.com:9000');
+        assert.equal(stitchedConfig.system.vhosts.myvhost.cert, '/path/to/cert');
+        done();
+      });
+    })
+  });
+
   it('stitches together bundles correctly, and replaces properties like their name', function (done) {
     var Apid = require('../lib/apid');
     var apidLib = new Apid();
