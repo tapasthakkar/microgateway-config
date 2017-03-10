@@ -68,7 +68,10 @@ describe('library basic functions', function () {
     createServer(handleRequest, PORT, () => {
       var Apid = require('../lib/apid');
       var apidLib = new Apid();
-      apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://localhost:'+PORT}, (err, stitchedConfig) => {
+      apidLib.get({
+        systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), 
+        apidEndpoint: 'http://localhost:'+PORT
+      }, (err, stitchedConfig) => {
         assert.equal(stitchedConfig.proxies.length, 0);
         assert.equal(stitchedConfig.scopes, null);
         done()
@@ -108,7 +111,10 @@ describe('library basic functions', function () {
     createServer(handleRequest, PORT, () => {
       var Apid = require('../lib/apid');
       var apidLib = new Apid();
-      apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://localhost:'+PORT}, (err, stitchedConfig) => {
+      apidLib.get({
+        systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), 
+        apidEndpoint: 'http://localhost:'+PORT
+      }, (err, stitchedConfig) => {
         assert.equal(stitchedConfig.proxies.length, 4);
         assert.equal(stitchedConfig.system.port, 8000);
         assert.equal(stitchedConfig.system.vhosts.myvhost.vhost, 'www.myhost.com:9000');
@@ -149,7 +155,10 @@ describe('library basic functions', function () {
     createServer(handleRequest, PORT, () => {
       var Apid = require('../lib/apid');
       var apidLib = new Apid();
-      apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://localhost:'+PORT}, (err, stitchedConfig) => {
+      apidLib.get({
+        systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), 
+        apidEndpoint: 'http://localhost:'+PORT
+      }, (err, stitchedConfig) => {
         assert.equal(err.message, 'config does not exist');
       });
     })
@@ -158,7 +167,10 @@ describe('library basic functions', function () {
   it('calls back with an error if cannot connect to apid endpoint', function (done) {
     var Apid = require('../lib/apid');
     var apidLib = new Apid();
-    apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://foo:'+PORT}, (err, stitchedConfig) => {
+    apidLib.get({
+      systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), 
+      apidEndpoint: 'http://foo:'+PORT
+    }, (err, stitchedConfig) => {
       assert.equal(err.code, 'ENOTFOUND')
       done();
     });
@@ -374,7 +386,10 @@ describe('long polling full replace', () => {
       }
 
       
-      apidLib.get({systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), apidEndpoint: 'http://localhost:'+port}, (err, stitchedConfig) => {
+      apidLib.get({
+        systemConfigPath: path.join(__dirname, 'configdir/systemConfig.yaml'), 
+        apidEndpoint: 'http://localhost:'+port
+      }, (err, stitchedConfig) => {
         apidLib.beginLongPoll(mockClientSocket, 100)
       });
     })
