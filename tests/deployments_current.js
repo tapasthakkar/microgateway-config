@@ -56,7 +56,7 @@ describe('library basic functions', function () {
     }
   })
 
-  it('sends back an error with an empty body', function (done) {
+  it('sends back an empty configuration', function (done) {
 
     function handleRequest(request, response){
       if(request.method == 'GET') {
@@ -379,4 +379,30 @@ describe('long polling full replace', () => {
       });
     })
   })
+
+  it('will validate proxy configurations properly', (done) => {
+    var Apid = require('../lib/apid');
+    var apidLib = new Apid();
+    var config = require('./configdir/good_proxy_config');
+    
+    apidLib._basicValidation(config, (err, valid) => {
+      assert.equal(valid, true);
+      done();
+    });
+
+  });
+
+  it('will invalidate proxy configurations properly', (done) => {
+    var Apid = require('../lib/apid');
+    var apidLib = new Apid();
+    var config = require('./configdir/bad_proxy_config');
+    
+    apidLib._basicValidation(config, (err, valid, invalidConfig) => {
+      assert.equal(invalidConfig.base_path, '/iloveapis')
+      assert.equal(invalidConfig.vhost, 'myvhost')
+      assert.equal(valid, false);
+      done();
+    });
+
+  });
 })

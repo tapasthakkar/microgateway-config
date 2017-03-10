@@ -9,7 +9,7 @@ scopes:
         url: 'http://mocktarget.apigee.net/'
         PropBUNDLE_LEVEL: scope1bundle2prop
         PropSCOPE_LEVEL: scope1prop
-        vhost: myvhost2
+        vhost: myvhost
         plugins:
           - spikearrest
       edgemicro_whatsup:
@@ -45,7 +45,7 @@ scopes:
         url: 'http://mocktarget.apigee.net/'
         PropBUNDLE_LEVEL: scop21bundle1prop
         PropSCOPE_LEVEL: scope2prop
-        vhost: myvhost
+        vhost: myvhost2
         plugins:
           - analytics
           - spikearrest

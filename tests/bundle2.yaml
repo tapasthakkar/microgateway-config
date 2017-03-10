@@ -6,6 +6,6 @@ edgemicro_hello:
   url: 'http://mocktarget.apigee.net/'
   PropBUNDLE_LEVEL: {{PropBUNDLE_LEVEL}}
   PropSCOPE_LEVEL: {{PropSCOPE_LEVEL}}
-  vhost: myvhost2
+  vhost: {{vhost}}
   plugins:
     - spikearrest

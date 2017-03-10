@@ -10,7 +10,8 @@ module.exports = [
     "uri": "file://./tests/bundle2.zip",
     "configuration": {
       "PropBUNDLE_LEVEL": "scope1bundle2prop",
-      "PropSCOPE_LEVEL": "scope1prop"
+      "PropSCOPE_LEVEL": "scope1prop",
+      "vhost": "myvhost"
     }
   },
   {
@@ -24,7 +25,8 @@ module.exports = [
     "uri": "file://./tests/bundle1.zip",
     "configuration": {
       "PropBUNDLE_LEVEL": "scope1bundle1prop",
-      "PropSCOPE_LEVEL": "scope1prop"
+      "PropSCOPE_LEVEL": "scope1prop",
+      "vhost": "myvhost"
     }
   },
   {
@@ -38,7 +40,8 @@ module.exports = [
     "uri": "file://./tests/bundle2.zip",
     "configuration": {
       "PropBUNDLE_LEVEL": "scope2bundle2prop",
-      "PropSCOPE_LEVEL": "scope2prop"
+      "PropSCOPE_LEVEL": "scope2prop",
+      "vhost": "myvhost2"
     }
   },
   {
@@ -52,7 +55,8 @@ module.exports = [
     "uri": "file://./tests/bundle1.zip",
     "configuration": {
       "PropBUNDLE_LEVEL": "scop21bundle1prop",
-      "PropSCOPE_LEVEL": "scope2prop"
+      "PropSCOPE_LEVEL": "scope2prop",
+      "vhost": "myvhost2"
     }
   }
 ]
