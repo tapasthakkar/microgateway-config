@@ -7,7 +7,7 @@ module.exports = function(){
   var ioInstance = io();
   var apidInstance = apid();
   return {
-    get:function(options,cb, clientSocket){
+    get:function(options, cb, clientSocket){
       /**
        * load the config from apid and merge with default config
        * @param options {target:save location and filename,keys: {key:,secret:},source:default loading target}
