@@ -112,7 +112,7 @@ var certificate =
   VslLJ4NsqQ9UCxQ9Odn1PsDJkVOzjGNMcnJ7yBgBg4UFJwja5k4sRRi6s0TV7RNK
   KBvtoZMVcGcvZGwtbwEM0IYzQjr16RgpmlGxt/Mua6BvOE+I+aRJ6WwFuAR2dChB
   6En2+3By8LI=
-  -----END CERTIFICATE-----`;
+-----END CERTIFICATE-----`;
 
 module.exports = {
   get: function(options, callback) {
@@ -121,7 +121,7 @@ module.exports = {
       case config.edge_config.bootstrap:
         return callback(null, {statusCode: 200}, JSON.stringify(proxies));
       case config.edge_config.jwt_public_key:
-        return callback(null, {statusCode: 200}, JSON.stringify(certificate));
+        return callback(null, {statusCode: 200}, certificate);
       case config.edge_config.products:
         return callback(null, {statusCode: 200}, JSON.stringify(products));
       default:
