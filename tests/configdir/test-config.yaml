@@ -17,7 +17,7 @@ edgemicro:
   max_times: 300
   config_change_poll_interval: 600
   proxies:
-      - edgemicro_proxyOne
+      - edgemicro_proxyOne:
       - edgemicro_proxyTwo
   logging:
     level: error

@@ -59,8 +59,8 @@ describe('library basic functions', function () {
       assert.equal(config.proxies[0].name, 'edgemicro_proxyOne', 'proxy not as expected');
       assert.equal(config.proxies[1].name, 'edgemicro_proxyTwo', 'proxy not as expected');
       assert.deepEqual(config.product_to_proxy, {
-        productOne: [ 'edgemicro_proxyOne', 'edgemicro_proxyTwo' ],
-        productTwo: [ 'edgemicro_proxyOne', 'edgemicro_proxyThree' ]
+        productOne: [ 'edgemicro_proxyOne', 'edgemicro_proxyTwo' ], //proxyOne is object in config (can have subconfig)
+        productTwo: [ 'edgemicro_proxyOne', 'edgemicro_proxyThree' ] //proxyTwo is string (no subconfig)
       }, 'products not as expected');
       done();
     });
