@@ -1,6 +1,6 @@
 {
   "name": "microgateway-config",
-  "version": "2.4.10-beta",
+  "version": "2.4.11-beta",
   "description": "Apigee Microgateway Handler",
   "main": "index.js",
   "dependencies": {
@@ -11,7 +11,8 @@
     "fs-extra": "^0.26.6",
     "js-yaml": "^3.5.4",
     "lodash": "^4.17.10",
-    "request": "^2.87.0"
+    "request": "^2.87.0",
+    "resolve": "^1.8.1"
   },
   "scripts": {
     "test": "mocha tests"
