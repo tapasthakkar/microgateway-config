@@ -1,7 +1,5 @@
 {
   "name": "microgateway-config",
-  "version": "2.4.11-beta",
-  "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
     "ajv": {
@@ -795,4 +793,6 @@
       "integrity": "sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8="
     }
   }
+  "version": "2.4.11",
+  "lockfileVersion": 1
 }
