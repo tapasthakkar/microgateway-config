@@ -1,10 +1,14 @@
+//to test fill in tests/envVars.js with account info
+// set edgemicroNodeModDir to the location of microgateway
+
 'use strict';
+const envVars = require('./envVars.js');
 const path = require('path');
+const edgemicroNodeModDir = process.env.mName || path.join(__dirname, '..', '..', 'microgateway');
 const fs = require('fs');
 const assert = require('assert');
 const os = require('os');
 const jsyaml = require('js-yaml');
-const edgemicroNodeModDir = process.env.mName || path.join(__dirname, '..', '..', 'microgateway');
 const locUtilPath = path.join(edgemicroNodeModDir, 'config', 'locations.js');
 const loc = require(locUtilPath);
 const mgwInitPath = path.join(edgemicroNodeModDir, 'cli', 'lib', 'init.js');
@@ -22,7 +26,6 @@ const defaultConfigJSON = jsyaml.safeLoad(defaultConfigString, 'utf8');
 const mergedDefaultConfigSource = path.join(__dirname, './fixtures/victorshaw-eval-test-config.yaml');
 const mergedConfigTarget = path.join(__dirname, './fixtures/testing-victorshaw-eval-test-config.yaml');
 
-const envVars = require('./envVars.js');
 const { user: username, password, env, org, key, secret, tokenId, tokenSecret } = envVars;
 const defaultPath = loc.getDefaultPath();
 const defaultDir = loc.homeDir;
