@@ -15,7 +15,7 @@
     "resolve": "^1.8.1"
   },
   "scripts": {
-    "test": "mocha tests"
+    "test": "mocha tests  --timeout 90000"
   },
   "devDependencies": {
     "chai": "^2.3.0",

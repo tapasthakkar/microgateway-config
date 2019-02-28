@@ -2,7 +2,9 @@ var io = require('./lib/io');
 var network = require('./lib/network');
 var path = require('path');
 var os = require('os')
+var debug = require('debug');
 
+debug('asdf');
 module.exports = function(){
   var ioInstance = io();
   var networkInstance = network();
