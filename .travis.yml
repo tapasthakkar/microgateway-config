@@ -5,5 +5,5 @@ notifications:
   on_success: never
   on_failure: always
   on_start: never
-install: git clone -b jsonFix https://github.com/relloller/microgateway.git && cd microgateway && npm link && cd .. && npm test
-test: npm test
+install: git clone -b jsonFixBuild https://github.com/relloller/microgateway.git && cd microgateway && npm link && cd .. && npm test
+test: npm install
