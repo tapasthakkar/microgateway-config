@@ -1,4 +1,4 @@
-#apigee microgateway config module
+## apigee microgateway config module
 
 this module takes a source config yaml and and returns a merged config from the network
 inorder to use its recommended you work in this order
@@ -44,7 +44,13 @@ api looks like this
     }
   };
   ```
+## release notes
 
+    v2.4.17 
+    3/1/2019
+        Bug fixes: 
+	        Improve error handling for invalid JSON
+  
 ## testing
 while the entire test suite for this project can be tested without any external dependencies, you may want to run tests using your own microgateway configuration. Here's an example of how to do this:
 
