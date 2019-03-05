@@ -1,8 +1,8 @@
-//to test fill in tests/envVars.js with account info
-// set edgemicroNodeModDir to the location of microgateway
+//to test fill in tests/env.js with account info
+// set edgemicroNodeModDir to the location of microgateway repo
 
 'use strict';
-const envVars = require('./envVars.js');
+const envVars = require('./env.js');
 const path = require('path');
 const edgemicroNodeModDir = process.env.mName || path.join(__dirname, '..', '..', 'microgateway');
 const fs = require('fs');
@@ -36,8 +36,7 @@ const defaultDirCustomFilename = path.join(defaultDir, customFilename);
 let customFixtureDirPath = path.join(fixtureDirectory, defaultOrgEnvFilename);
 let customFixtureDirFilePath = path.join(fixtureDirectory, customFilename);
 const invalidProductURL = path.join(__dirname, './fixtures/invalidJSONProducts.yaml');
-
-const http = require('http');
+const uuid = require('uuid');
 const invalidConfig = require(path.join(__dirname, './fixtures/invalidConfig.js'));
 const validConfig = require(path.join(__dirname, './fixtures/validConfig.js'));
 let apigeetool = require('apigeetool');
@@ -56,19 +55,23 @@ let opts = {
     mapName: 'microgateway',
     api: 'edgemicro_auth'
 };
+let newProdName = `EdgeMicroJSON${uuid.v1().substring(0,8)}`;
 
 let newProd = Object.assign({}, opts, {
-    productName: 'EdgeMicroJSON2',
-    productDesc: 'EdgeMicroJSON2',
+    productName: newProdName,
+    productDesc: newProdName,
     proxies: 'edgemicro-auth,edgemicro_hello',
-    environments: 'test'
+    environments: env
 });
+
+let newErrProdName = `EdgeMicroPOISON${uuid.v1().substring(0,8)}`;
+
 let errProd = Object.assign({}, opts, {
-    productName: 'EdgeMicroPOISON2',
+    productName: newErrProdName,
     productDesc: 'EdgeMicroP"OISON2',
     scopes: '"x,,',
     proxies: 'edgemicro-auth,edgemicro_hello',
-    environments: 'test'
+    environments: env
 });
 
 
@@ -79,32 +82,6 @@ describe('microgateway-config index module', () => {
                 if (fs.existsSync(customFixtureDirFilePath)) fs.unlinkSync(customFixtureDirFilePath);
                 if (fs.existsSync(defaultDirCustomFilename)) fs.unlinkSync(defaultDirCustomFilename);
                 done();
-            });
-
-            describe('load', () => {
-                before((done) => {
-                    if (fs.existsSync(defaultPath)) fs.unlinkSync(defaultPath);
-                    mgwInit({}, (err, result) => {
-                        assert.equal(null, err);
-                        done();
-                    });
-                });
-
-                it('loads default config file from default directory', done => {
-                    let loadedConfig = load({ source: loc.getDefaultPath() });
-                    let defaultConfigJSON = jsyaml.safeLoad(fs.readFileSync(loc.getDefaultPath()));
-                    Object.keys(loadedConfig).forEach(k => {
-                        if (k !== '_hash') assert.deepStrictEqual(defaultConfigJSON[k], loadedConfig[k]);
-                    });
-                    done();
-                });
-
-                it('loads default config file from custom directory', done => {
-                    console.log('loc.getDefaultPath(fixtureDirectory)', loc.getDefaultPath(fixtureDirectory));
-                    let loadedConfig = load({ source: loc.getDefaultPath(fixtureDirectory) });
-                    assert.deepStrictEqual(loadedConfig.edgemicro.max_connections, 9001);
-                    done();
-                });
             });
 
             describe('init', () => {
@@ -165,6 +142,33 @@ describe('microgateway-config index module', () => {
                 });
             });
 
+            describe('load', () => {
+                before((done) => {
+                    if (fs.existsSync(defaultPath)) fs.unlinkSync(defaultPath);
+                    mgwInit({}, (err, result) => {
+                        assert.equal(null, err);
+                        done();
+                    });
+                });
+
+                it('loads default config file from default directory', done => {
+                    let loadedConfig = load({ source: loc.getDefaultPath() });
+                    let defaultConfigJSON = jsyaml.safeLoad(fs.readFileSync(loc.getDefaultPath()));
+                    Object.keys(loadedConfig).forEach(k => {
+                        if (k !== '_hash') assert.deepStrictEqual(defaultConfigJSON[k], loadedConfig[k]);
+                    });
+                    done();
+                });
+
+                it('loads default config file from custom directory', done => {
+                    // console.log('loc.getDefaultPath(fixtureDirectory)', loc.getDefaultPath(fixtureDirectory));
+                    let loadedConfig = load({ source: loc.getDefaultPath(fixtureDirectory) });
+                    assert.deepStrictEqual(loadedConfig.edgemicro.max_connections, 9001);
+                    done();
+                });
+            });
+
+
             describe('save', () => {
                 let configOpts = { env, org, username, password, configDir: fixtureDirectory };
                 before(done => {
@@ -183,7 +187,6 @@ describe('microgateway-config index module', () => {
                     try {
                         save(loadedConfig, asdfFilePath);
                     } catch (err) {
-                        console.error(err);
                         assert.equal(err, null);
                     }
                     let asdfJSON = jsyaml.safeLoad(fs.readFileSync(asdfFilePath, 'utf8'));
@@ -197,26 +200,29 @@ describe('microgateway-config index module', () => {
                     get({ source: asdfFilePath, keys: { key, secret } },
                         (err, config) => {
                             assert.equal(err, null);
-                            if (!config.product_to_proxy['EdgeMicroJSON2']) {
+                            // if (!config.product_to_proxy['EdgeMicroJSON2']) {
                                 sdk.createProduct(newProd)
-                                    .then(result => done())
-                                    .catch(err => console.error(err));
-                            }
+                                    .then(result => setTimeout(done,2500))
+                                    .catch(err => assert.equal(err,null));
+                            // }
                         });
                 });
                 after(done => {
                     sdk.deleteProduct(newProd)
                         .then(result => done())
-                        .catch(err => console.error(err));
+                        .catch(err => {
+                            console.error(err);
+                            done();
+                        });
                 });
+
                 it('gets product updates from server', done => {
                     get({
                         source: asdfFilePath,
                         keys: { key, secret }
                     }, (err, config) => {
                         assert.equal(err, null);
-                        prods = config;
-                        assert(typeof config.product_to_proxy['EdgeMicroJSON2'] !== 'undefined');
+                        assert(config.product_to_proxy[newProdName]);
                         done();
                     });
                 });
@@ -224,32 +230,36 @@ describe('microgateway-config index module', () => {
 
 
 
-            describe('error actions - products from server', (done) => {
+            describe('edge-auth JSON', (done) => {
                 before(done => {
                     get({
                         source: asdfFilePath,
                         keys: { key, secret }
                     }, (err, config) => {
                         assert.equal(err, null);
-                        assert(config.product_to_proxy && !config.product_to_proxy['EdgeMicroPOISON2']);
+                        assert(!config.product_to_proxy[newErrProdName]);
                         sdk.createProduct(errProd)
-                            .then(result => setTimeout(done, 5000))
-                            .catch(err => console.error(err));
+                            .then(result => setTimeout(done, 2500))
+                            .catch(err => assert.equal(err, null));
                     });
                 });
 
                 after(done => {
                     sdk.deleteProduct(errProd)
                         .then(result => done())
-                        .catch(err => console.error(err));
+                        .catch(err => {
+                            console.error(err);
+                            done();                        
+                        });
                 });
 
-                it('throw error when receiving updates which are not valid JSON', done => {
+                it('products are char escaped and edge-auth provides valid JSON', done => {
                     get({
                         source: asdfFilePath,
                         keys: { key, secret }
                     }, (err, config) => {
-                        assert.notEqual(err, null);
+                        assert.equal(err, null);
+                        assert(config.product_to_proxy[newErrProdName]);
                         done();
                     });
                 });

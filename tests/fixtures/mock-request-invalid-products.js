@@ -1,4 +1,4 @@
-var io = require('../lib/io')();
+var io = require('../../lib/io')();
 
 var proxies = {
   "apiProxies" : [
@@ -29,7 +29,7 @@ var proxies = {
   ]
 };
 
-var products = {
+var products = `{
   "apiProduct" : [
     {
       "apiResources" : [ "/**" ],
@@ -43,7 +43,7 @@ var products = {
       "createdAt" : 123456789,
       "createdBy" : "test@example.com",
       "description" : "",
-      "displayName" : "productOne",
+      "displayName" : "produ"ctOne",
       "environments" : [ "test" ],
       "lastModifiedAt" : 123456789,
       "lastModifiedBy" : "test@example.com",
@@ -92,7 +92,7 @@ var products = {
       "scopes" : [ "" ]
     }
   ]
-};
+}`;
 
 // from https://ws-poc3-test.apigee.net/edgemicro-auth/publicKey
 var certificate =
@@ -116,14 +116,16 @@ var certificate =
 
 module.exports = {
   get: function(options, callback) {
-    var config = io.loadSync({source:'./tests/configdir/test-config.yaml'});
+    var config = io.loadSync({source:'./tests/fixtures/load-victorshaw-eval-test-config.yaml'});
+    // console.log('options-get', options);
+    
     switch(options.url) {
       case config.edge_config.bootstrap:
-        return callback(null, {statusCode: 200}, JSON.stringify(proxies));
+        return callback(null, {statusCode: 200, statusMessage:'OK'}, JSON.stringify(proxies));
       case config.edge_config.jwt_public_key:
-        return callback(null, {statusCode: 200}, JSON.stringify(certificate));
+        return callback(null, {statusCode: 200,statusMessage:'OK'}, JSON.stringify(certificate));
       case config.edge_config.products:
-        return callback(null, {statusCode: 200}, JSON.stringify(products));
+        return callback(null, {statusCode: 200,statusMessage:'OK'}, products);
       default:
         return callback(new Error(`incorrect url: ${options.url}`));
     }
