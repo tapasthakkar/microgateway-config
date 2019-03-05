@@ -1,6 +1,6 @@
-var io = require('../lib/io')();
+var io = require('../../lib/io')();
 
-var proxies = {
+var proxies = `{
   "apiProxies" : [
     {
       "apiProxyName" : "edgemicro_proxyOne",
@@ -21,13 +21,13 @@ var proxies = {
       "targetEndpoint" : { "name" : "default","url" : "http://localhost:8080/" }
     },
     {
-      "apiProxyName" : "edgemicro_proxyFour",
+      "apiProxyName" : "edgemicro_pro"yFour",
       "revision" : "1",
       "proxyEndpoint" : { "name" : "default","basePath" : "/proxyFour" },
       "targetEndpoint" : { "name" : "default","url" : "http://localhost:8080/" }
     }
   ]
-};
+}`;
 
 var products = {
   "apiProduct" : [
@@ -116,10 +116,10 @@ var certificate =
 
 module.exports = {
   get: function(options, callback) {
-    var config = io.loadSync({source:'./tests/configdir/test-config.yaml'});
+    var config = io.loadSync({source:'./tests/fixtures/load-victorshaw-eval-test-config.yaml'});
     switch(options.url) {
       case config.edge_config.bootstrap:
-        return callback(null, {statusCode: 200}, JSON.stringify(proxies));
+        return callback(null, {statusCode: 200}, proxies);
       case config.edge_config.jwt_public_key:
         return callback(null, {statusCode: 200}, JSON.stringify(certificate));
       case config.edge_config.products:

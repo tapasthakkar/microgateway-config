@@ -16,11 +16,14 @@
     "resolve": "^1.8.1"
   },
   "scripts": {
-    "test": "mocha tests  --timeout 90000"
+    "test": "nyc mocha tests/*.unit.test.js  --timeout 10000",
+    "test:unit": "nyc mocha tests/*.unit.test.js  --timeout 10000",
+    "test:integration": "nyc mocha tests/*.integration.test.js --timeout 60000"
   },
   "devDependencies": {
     "chai": "^2.3.0",
     "mocha": "^5.2.0",
+    "nyc": "^13.3.0",
     "proxyquire": "^1.7.10"
   }
 }
