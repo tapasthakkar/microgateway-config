@@ -1,6 +1,6 @@
 {
   "name": "microgateway-config",
-  "version": "2.5.31-beta",
+  "version": "2.5.32-beta",
   "description": "Apigee Microgateway Handler",
   "main": "index.js",
   "dependencies": {
