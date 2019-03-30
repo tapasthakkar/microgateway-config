@@ -7,6 +7,7 @@ const fs = require('fs');
 const jsyaml = require('js-yaml');
 let proxyConfig = require(path.join(__dirname, 'fixtures','proxyValidateConfig.js'));
 let cachedJSON = jsyaml.safeLoad(fs.readFileSync(path.join(__dirname, 'fixtures','cached.yaml')))
+
 describe('proxy-validator module', () => {
 	it('validates proxies in config', (done) => {
 		try{
