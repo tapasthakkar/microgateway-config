@@ -59,8 +59,8 @@ analytics:
   secret: aaaaaaaasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfadsfasdfa
 edgemicro:
   port: 8000
-  max_connections: 1000
-  config_change_poll_interval: 600
+  max_connections: 9001
+  config_change_poll_interval: 24
   logging:
     level: error
     dir: /var/tmp
