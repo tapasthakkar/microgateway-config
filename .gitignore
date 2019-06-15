@@ -38,3 +38,4 @@ node_modules
 env.sh
 .nyc_output
 tests/env.js
+tools
