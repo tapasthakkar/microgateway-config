@@ -9,7 +9,7 @@
     "body-parser": "^1.15.0",
     "config": "^1.19.0",
     "debug": "^3.1.0",
-    "fs-extra": "^0.26.6",
+    "fs-extra": "^0.26.7",
     "js-yaml": "^3.5.4",
     "lodash": "^4.17.10",
     "request": "^2.87.0",

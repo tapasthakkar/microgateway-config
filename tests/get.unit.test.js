@@ -42,7 +42,10 @@ describe('config - get ', () => {
     });
 
     it('displays error when receiving invalid JSON product info', (done) => {
+        var saveErr = console.error;
+        console.error = () => {}
         configlibmockInvalidProducts.get({ source: './tests/fixtures/load-victorshaw-eval-test-config.yaml', keys: keys }, (err, config) => {
+            console.error = saveErr;
             assert.equal(err instanceof Error, true);
             assert.equal(err.message.includes('CRITICAL ERROR: error parsing downloaded product list'), true);
             done();
@@ -50,7 +53,10 @@ describe('config - get ', () => {
     });
 
     it('displays error when receiving invalid JSON proxy info', (done) => {
+        var saveErr = console.error;
+        console.error = () => {}
         configlibmockInvalidProxies.get({ source: './tests/fixtures/load-victorshaw-eval-test-config.yaml', keys: keys }, (err, config) => {
+            console.error = saveErr;
             assert.equal(err instanceof Error, true);
             done();
         });
