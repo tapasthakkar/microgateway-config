@@ -1,3 +1,5 @@
+'use strict';
+
 var io = require('./lib/io');
 var network = require('./lib/network');
 var path = require('path');
