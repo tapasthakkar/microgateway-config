@@ -33,7 +33,7 @@ let configlibmockInvalidProxies = proxyquire.load('../index.js', {
 
 describe('config - get ', () => {
     it('gets product updates from server', done => {
-        configlibmockValid.get({ source: './tests/fixtures/load-victorshaw-eval-test-config.yaml', keys: keys }, (err, config) => {
+        configlibmockValid.get({ source: './tests/fixtures/load-victorshaw-eval-test-config.yaml', keys: keys, env : 'test' }, (err, config) => {
             assert(config.product_to_proxy.productOne);
             assert(config.product_to_proxy.productTwo);
             assert(config.product_to_proxy.productThree);
