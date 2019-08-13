@@ -21,12 +21,15 @@
     "resolve": "^1.8.1"
   },
   "scripts": {
+    "lint": "eslint  ./lib index.js",
     "test": "nyc mocha tests/*.unit.test.js  --timeout 10000",
     "test:unit": "nyc mocha tests/*.unit.test.js  --timeout 10000",
     "test:integration": "nyc mocha tests/*.integration.test.js --timeout 60000"
   },
   "devDependencies": {
     "chai": "^2.3.0",
+    "eslint": "^6.1.0",
+    "eslint-config-google": "^0.13.0",
     "mocha": "^5.2.0",
     "nyc": "^14.1.1",
     "proxyquire": "^1.7.10",
