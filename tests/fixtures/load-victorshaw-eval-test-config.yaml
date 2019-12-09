@@ -39,7 +39,6 @@ analytics:
   batchSize: 500
   flushInterval: 5000
 quotas:
-  minute:
-    bufferSize: 10
-  default:
-    bufferSize: 10000
+  bufferSize:
+    minute: 10
+    default: 10000

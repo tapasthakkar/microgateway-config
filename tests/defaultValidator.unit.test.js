@@ -69,62 +69,174 @@ describe('default-validator module', () => {
 
     it('throws error for invalid quotas type', (done) => {
         const quotas = Object.assign({}, loadedConfig, { quotas: 2})
+        let flag = false;
         try {
             defaultValidator.validate(quotas);
         } catch (err) {
-            assert(err.message.includes('config.quotas is not an object'));
+            flag = err.message.includes('config.quotas is not an object');
         }
+        assert(flag);
         done();
     });
 
     it('throws error for invalid quotas key', (done) => {
         const quotas = Object.assign({}, loadedConfig, { quotas: { invalid: {}}})
+        let flag = false;
         try {
             defaultValidator.validate(quotas);
         } catch (err) {
-            assert(err.message.includes('invalid value in config.quotas'));
+            flag = err.message.includes('invalid value in config.quotas');
         }
+        assert(flag);
         done();
     });
 
-    it('throws error for missing quotas bufferSize', (done) => {
-        const quotas = Object.assign({}, loadedConfig, { quotas: { default: { }}})
+    it('throws error for invalid quotas bufferSize value', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { bufferSize: 'string value' }})
+        let flag = false;
         try {
             defaultValidator.validate(quotas);
         } catch (err) {
-            assert(err.message.includes('default.bufferSize is not a number'));
+            flag = err.message.includes('config.quotas.bufferSize is not an object');
         }
+        assert(flag);
         done();
     });
 
     it('throws error for non-number bufferSize', (done) => {
-        const quotas = Object.assign({}, loadedConfig, { quotas: { default: { bufferSize: 'over9000' }}})
+        const quotas = Object.assign({}, loadedConfig, { quotas: { bufferSize: { default: 'over9000' }}})
+        let flag = false;
         try {
             defaultValidator.validate(quotas);
         } catch (err) {
-            assert(err.message.includes('default.bufferSize is not a number'));
+           flag =  err.message.includes('bufferSize.default is not a number');
         }
+        assert(flag);
         done();
     });
 
     it('throws error for invalid quotas bufferSize', (done) => {
-        const quotas = Object.assign({}, loadedConfig, { quotas: { default: { bufferSize: -1 }}})
+        const quotas = Object.assign({}, loadedConfig, { quotas: { bufferSize: { default: -1 }}})
+        let flag = false;
         try {
             defaultValidator.validate(quotas);
         } catch (err) {
-            assert(err.message.includes('default.bufferSize must be greater than or equal to zero'));
+            flag = err.message.includes('config.quotas.bufferSize.default must be greater than or equal to zero');
         }
+        assert(flag);
+        done();
+    });
+
+    it('throws error for invalid timeunit quotas bufferSize', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { bufferSize: { year: 1000 }}})
+        let flag = false;
+        try {
+            defaultValidator.validate(quotas);
+        } catch (err) {
+            flag = err.message.includes('invalid value in config.quotas.bufferSize: year, valid values are hour, minute, day, week, month & default');
+        }
+        assert(flag);
         done();
     });
 
     it('accepts a zero quota bufferSize', (done) => {
-        const quotas = Object.assign({}, loadedConfig, { quotas: { minute: { bufferSize: 0 }}})
+        const quotas = Object.assign({}, loadedConfig, { quotas: { bufferSize: { minute: 0 }}})
         defaultValidator.validate(quotas);
         done();
     });
 
     it('accepts a valid quota bufferSize', (done) => {
-        const quotas = Object.assign({}, loadedConfig, { quotas: { minute: { bufferSize: 1 }}})
+        const quotas = Object.assign({}, loadedConfig, { quotas: { bufferSize: { minute: 1 }}})
+        defaultValidator.validate(quotas);
+        done();
+    });
+
+    it('throws error for non-boolean useRedis', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { useRedis: 'invalid' }})
+        let flag = false;
+        try {
+            defaultValidator.validate(quotas);
+        } catch (err) {
+           flag = err.message.includes('config.quotas.useRedis is not an boolean');
+        }
+        assert(flag);
+        done();
+    });
+
+    it('throws error for undefined useRedis', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { useRedis: undefined }})
+        let flag = false;
+        try {
+            defaultValidator.validate(quotas);
+        } catch (err) {
+           flag = err.message.includes('config.quotas.useRedis is not an boolean');
+        }
+        assert(flag);
+        done();
+    });
+
+    it('accepts a valid quota useRedis', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { useRedis: true }})
+        defaultValidator.validate(quotas);
+        done();
+    });
+
+    it('throws error for non-boolean useDebugMpId', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { useDebugMpId: 'invalid' }})
+        let flag = false;
+        try {
+            defaultValidator.validate(quotas);
+        } catch (err) {
+           flag = err.message.includes('config.quotas.useDebugMpId is not an boolean');
+        }
+        assert(flag);
+        done();
+    });
+
+    it('throws error for undefined useDebugMpId', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { useDebugMpId: undefined }})
+        let flag = false;
+        try {
+            defaultValidator.validate(quotas);
+        } catch (err) {
+           flag = err.message.includes('config.quotas.useDebugMpId is not an boolean');
+        }
+        assert(flag);
+        done();
+    });
+
+    it('accepts a valid quota useDebugMpId', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { useDebugMpId: true }})
+        defaultValidator.validate(quotas);
+        done();
+    });
+
+    it('throws error for non-boolean failOpen', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { failOpen: 'invalid' }})
+        let flag = false;
+        try {
+            defaultValidator.validate(quotas);
+        } catch (err) {
+           flag = err.message.includes('config.quotas.failOpen is not an boolean');
+        }
+        assert(flag);
+        done();
+    });
+
+    it('throws error for undefined failOpen', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { failOpen: undefined }})
+        let flag = false;
+        try {
+            defaultValidator.validate(quotas);
+        } catch (err) {
+           flag = err.message.includes('config.quotas.failOpen is not an boolean');
+        }
+        assert(flag);
+        done();
+    });
+
+    it('accepts a valid quota failOpen', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { failOpen: true }})
         defaultValidator.validate(quotas);
         done();
     });
