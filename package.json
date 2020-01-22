@@ -1,6 +1,6 @@
 {
   "name": "microgateway-config",
-  "version": "3.0.8",
+  "version": "3.1.0",
   "description": "Apigee Microgateway Handler",
   "main": "index.js",
   "license": "Apache-2.0",
