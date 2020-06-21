@@ -163,8 +163,8 @@ describe('default-validator module', () => {
         done();
     });
 
-    it('throws error for undefined useRedis', (done) => {
-        const quotas = Object.assign({}, loadedConfig, { quotas: { useRedis: undefined }})
+    it('throws error for null useRedis', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { useRedis: null }})
         let flag = false;
         try {
             defaultValidator.validate(quotas);
@@ -193,8 +193,8 @@ describe('default-validator module', () => {
         done();
     });
 
-    it('throws error for undefined useDebugMpId', (done) => {
-        const quotas = Object.assign({}, loadedConfig, { quotas: { useDebugMpId: undefined }})
+    it('throws error for null useDebugMpId', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { useDebugMpId: null }})
         let flag = false;
         try {
             defaultValidator.validate(quotas);
@@ -223,8 +223,8 @@ describe('default-validator module', () => {
         done();
     });
 
-    it('throws error for undefined failOpen', (done) => {
-        const quotas = Object.assign({}, loadedConfig, { quotas: { failOpen: undefined }})
+    it('throws error for null failOpen', (done) => {
+        const quotas = Object.assign({}, loadedConfig, { quotas: { failOpen: null }})
         let flag = false;
         try {
             defaultValidator.validate(quotas);
