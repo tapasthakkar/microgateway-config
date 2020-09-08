@@ -4,6 +4,7 @@ var io = require('./lib/io');
 var network = require('./lib/network');
 var path = require('path');
 var os = require('os')
+const RedisClientLib = require('./lib/redisClient');
 
 module.exports = function(){
   var ioInstance = io();
@@ -50,6 +51,13 @@ module.exports = function(){
        */
       ioInstance.setConsoleLogger(consoleLogger);
       networkInstance.setConsoleLogger(consoleLogger);
+    },
+    getRedisClient:function(config, cb){
+      /**
+       * Returns a new redis connection object.
+       * @param config object with redisHost, redisPort, redisDb and retryEnabled
+       */
+      return new RedisClientLib(config, cb);
     }
   };
 }();
