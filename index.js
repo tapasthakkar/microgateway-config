@@ -5,6 +5,7 @@ var network = require('./lib/network');
 var path = require('path');
 var os = require('os')
 const RedisClientLib = require('./lib/redisClient');
+const replaceEnvTags = require('./lib/env-tags-replacer');
 
 module.exports = function(){
   var ioInstance = io();
@@ -58,6 +59,16 @@ module.exports = function(){
        * @param config object with redisHost, redisPort, redisDb and retryEnabled
        */
       return new RedisClientLib(config, cb);
+    },
+    replaceEnvTags:function(config,options){
+      /**
+       * saves the config
+       * @param config object whose <E></E> tags to be replaced with env values.
+       * @param options object which has below properties
+       * displayLogs: boolean value, if 'true' console errors and debug logs will be displayed. 
+       * writeConsoleLog: custom function for console logging
+       */
+      return replaceEnvTags(config,options)
     }
   };
 }();
