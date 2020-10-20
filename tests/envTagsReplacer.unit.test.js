@@ -206,4 +206,231 @@ describe('env-tags-replacer module', () => {
         done();
     });
 
+    it('replaces env value as number with <n> tag', (done) => {
+        process.env.UNIT_TESTS_REDIS_PORT = 6379;
+        loadedConfig.edgemicro.redisPort = "<E><n>UNIT_TESTS_REDIS_PORT</n></E>"
+        let envReplacedConfig = null;
+        try {
+            envReplacedConfig = replaceEnvTags(loadedConfig);
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( typeof envReplacedConfig.edgemicro.redisPort, 'number');
+        done();
+    });
+
+    it('replaces env value as string without <n> tag', (done) => {
+        process.env.UNIT_TESTS_REDIS_PORT = 6379;
+        loadedConfig.edgemicro.redisPort = "<E>UNIT_TESTS_REDIS_PORT</E>"
+        let envReplacedConfig = null;
+        try {
+            envReplacedConfig = replaceEnvTags(loadedConfig);
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( typeof envReplacedConfig.edgemicro.redisPort, 'string');
+        done();
+    });
+
+    it('replaces env value as boolean:true with <b> tag', (done) => {
+        process.env.UNIT_TESTS_ALLOW_NO_AUTH = true;
+        loadedConfig.oauth.allowNoAuthorization = "<E><b>UNIT_TESTS_ALLOW_NO_AUTH</b></E>"
+        let envReplacedConfig = null;
+        try {
+            envReplacedConfig = replaceEnvTags(loadedConfig);
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( typeof envReplacedConfig.oauth.allowNoAuthorization, 'boolean');
+        done();
+    });
+
+    it('replaces env value as boolean:false with <b> tag', (done) => {
+        process.env.UNIT_TESTS_ALLOW_NO_AUTH = false;
+        loadedConfig.oauth.allowNoAuthorization = "<E><b>UNIT_TESTS_ALLOW_NO_AUTH</b></E>"
+        let envReplacedConfig = null;
+        try {
+            envReplacedConfig = replaceEnvTags(loadedConfig);
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( typeof envReplacedConfig.oauth.allowNoAuthorization, 'boolean');
+        done();
+    });
+
+    it('replaces env value as string without <b> tag', (done) => {
+        process.env.UNIT_TESTS_ALLOW_NO_AUTH = true;
+        loadedConfig.oauth.allowNoAuthorization = "<E>UNIT_TESTS_ALLOW_NO_AUTH</E>"
+        let envReplacedConfig = null;
+        try {
+            envReplacedConfig = replaceEnvTags(loadedConfig);
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( typeof envReplacedConfig.oauth.allowNoAuthorization, 'string');
+        done();
+    });
+
+    it('does not replaces env value for tags starting with <b> and ending with </n>', (done) => {
+        process.env.UNIT_TESTS_ALLOW_NO_AUTH = true;
+        loadedConfig.oauth.allowNoAuthorization = "<E><b>UNIT_TESTS_ALLOW_NO_AUTH</n></E>"
+        let envReplacedConfig = null;
+        try {
+            envReplacedConfig = replaceEnvTags(loadedConfig);
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( typeof envReplacedConfig.oauth.allowNoAuthorization, 'string');
+        done();
+    });
+
+    it('does not replaces env value for tags starting with <n> and ending with </b>', (done) => {
+        process.env.UNIT_TESTS_REDIS_PORT = 3243;
+        loadedConfig.edgemicro.redisPort = "<E><n>UNIT_TESTS_REDIS_PORT</b></E>"
+        let envReplacedConfig = null;
+        try {
+            envReplacedConfig = replaceEnvTags(loadedConfig);
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( typeof envReplacedConfig.edgemicro.redisPort, 'string');
+        done();
+    });
+
+    it('does not replaces env value for tags starting with <b> and ending without </b>', (done) => {
+        process.env.UNIT_TESTS_ALLOW_NO_AUTH = true;
+        loadedConfig.oauth.allowNoAuthorization = "<E><b>UNIT_TESTS_ALLOW_NO_AUTH</E>"
+        let envReplacedConfig = null;
+        try {
+            envReplacedConfig = replaceEnvTags(loadedConfig);
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( typeof envReplacedConfig.oauth.allowNoAuthorization, 'string');
+        done();
+    });
+
+    it('does not replaces env value for tags starting with <n> and ending without </n>', (done) => {
+        process.env.UNIT_TESTS_REDIS_PORT = true;
+        loadedConfig.edgemicro.redisPort = "<E><n>UNIT_TESTS_REDIS_PORT</E>"
+        let envReplacedConfig = null;
+        try {
+            envReplacedConfig = replaceEnvTags(loadedConfig);
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( typeof envReplacedConfig.edgemicro.redisPort, 'string');
+        done();
+    });
+
+    it('handles parsing errors', (done) => {
+        process.env.UNIT_TESTS_REDIS_PORT = '{\t<';
+        loadedConfig.edgemicro.redisPort = "<E>UNIT_TESTS_REDIS_PORT</E>"
+        let envReplacedConfig = null;
+        let logs = '';
+        try {
+            var oldWrite = process.stdout.write;
+            process.stdout.write = function(chunk, encoding, callback){
+                logs += chunk.toString(); // chunk is a String or Buffer
+            }
+            envReplacedConfig = replaceEnvTags(loadedConfig, { displayLogs: true });
+            process.stdout.write = oldWrite;
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( logs.includes("Error in replacing env tags in the config") , true)
+        done();
+    });
+
+    it('handles unsupported values for <n> tags', (done) => {
+        process.env.UNIT_TESTS_REDIS_PORT = 'invalid';
+        loadedConfig.edgemicro.redisPort = "<E><n>UNIT_TESTS_REDIS_PORT</n></E>";
+        let envReplacedConfig = null;
+        let logs = '';
+        try {
+            var oldWrite = process.stdout.write;
+            process.stdout.write = function(chunk, encoding, callback){
+                logs += chunk.toString(); // chunk is a String or Buffer
+            }
+            envReplacedConfig = replaceEnvTags(loadedConfig, { displayLogs: true });
+            process.stdout.write = oldWrite;
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( logs.includes("Supported values for <n> tags are integer") , true)
+        done();
+    });
+
+
+    it('handles unsupported values for <b> tags', (done) => {
+        process.env.UNIT_TESTS_ALLOW_NO_AUTH = 'invalid';
+        loadedConfig.oauth.allowNoAuthorization = "<E><b>UNIT_TESTS_ALLOW_NO_AUTH</b></E>";
+        let envReplacedConfig = null;
+        let logs = '';
+        try {
+            var oldWrite = process.stdout.write;
+            process.stdout.write = function(chunk, encoding, callback){
+                logs += chunk.toString(); // chunk is a String or Buffer
+            }
+            envReplacedConfig = replaceEnvTags(loadedConfig, { displayLogs: true });
+            process.stdout.write = oldWrite;
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( logs.includes("Supported values for <b> tags are boolean") , true)
+        done();
+    });
+
+    it('throws error for integer env variable inside <b> tags', (done) => {
+        process.env.UNIT_TESTS_REDIS_PORT = 1000;
+        loadedConfig.oauth.allowNoAuthorization = "<E><b>UNIT_TESTS_REDIS_PORT</b></E>";
+        let envReplacedConfig = null;
+        let logs = '';
+        try {
+            var oldWrite = process.stdout.write;
+            process.stdout.write = function(chunk, encoding, callback){
+                logs += chunk.toString(); // chunk is a String or Buffer
+            }
+            envReplacedConfig = replaceEnvTags(loadedConfig, { displayLogs: true });
+            process.stdout.write = oldWrite;
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( logs.includes("Supported values for <b> tags are boolean") , true)
+        done();
+    });
+
+    it('throws error for boolean env variable inside <n> tags', (done) => {
+        process.env.UNIT_TESTS_ALLOW_NO_AUTH = true;
+        loadedConfig.oauth.allowNoAuthorization = "<E><n>UNIT_TESTS_ALLOW_NO_AUTH</n></E>";
+        let envReplacedConfig = null;
+        let logs = '';
+        try {
+            var oldWrite = process.stdout.write;
+            process.stdout.write = function(chunk, encoding, callback){
+                logs += chunk.toString(); // chunk is a String or Buffer
+            }
+            envReplacedConfig = replaceEnvTags(loadedConfig, { displayLogs: true });
+            process.stdout.write = oldWrite;
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( logs.includes("Supported values for <n> tags are integer") , true)
+        done();
+    });
+
 });

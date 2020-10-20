@@ -62,7 +62,7 @@ module.exports = function(){
     },
     replaceEnvTags:function(config,options){
       /**
-       * saves the config
+       * replaces the env tags in config by the env values
        * @param config object whose <E></E> tags to be replaced with env values.
        * @param options object which has below properties
        * displayLogs: boolean value, if 'true' console errors and debug logs will be displayed. 
