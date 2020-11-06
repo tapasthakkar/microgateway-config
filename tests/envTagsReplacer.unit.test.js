@@ -3,8 +3,7 @@
 const assert = require('assert');
 const path = require('path');
 
-const { load } = require('../index.js');
-const replaceEnvTags = require('../lib/env-tags-replacer.js');
+const { load, replaceEnvTags } = require('../index.js');
 const fixtureDirectory = path.join(__dirname, 'fixtures');
 const defaultOrgEnvFilename = `cached.yaml`;
 let customFixtureDirPath = path.join(fixtureDirectory, defaultOrgEnvFilename);
@@ -148,7 +147,7 @@ describe('env-tags-replacer module', () => {
         done();
     });
 
-    it('error logs are printed with displayLogs: true', (done) => {
+    it('error logs are printed by default', (done) => {
         process.env.UNIT_TESTS_REDIS_HOST = 'localhost';
         loadedConfig.edgemicro.redisHost = "<E>UNIT_TESTS_REDIS_HOS</E>"
         let envReplacedConfig = null;
@@ -158,7 +157,7 @@ describe('env-tags-replacer module', () => {
             process.stdout.write = function(chunk, encoding, callback){
                 logs += chunk.toString(); // chunk is a String or Buffer
             }
-            envReplacedConfig = replaceEnvTags(loadedConfig, { displayLogs: true });
+            envReplacedConfig = replaceEnvTags(loadedConfig);
             process.stdout.write = oldWrite;
         } catch (err) {
             assert.equal(err, null);
@@ -168,7 +167,7 @@ describe('env-tags-replacer module', () => {
         done();
     });
 
-    it('error logs are not printed with displayLogs: false', (done) => {
+    it('error logs are printed with disableLogs: false', (done) => {
         process.env.UNIT_TESTS_REDIS_HOST = 'localhost';
         loadedConfig.edgemicro.redisHost = "<E>UNIT_TESTS_REDIS_HOS</E>"
         let envReplacedConfig = null;
@@ -178,31 +177,33 @@ describe('env-tags-replacer module', () => {
             process.stdout.write = function(chunk, encoding, callback){
                 logs += chunk.toString(); // chunk is a String or Buffer
             }
-            envReplacedConfig = replaceEnvTags(loadedConfig, { displayLogs: false });
+            envReplacedConfig = replaceEnvTags(loadedConfig, { disableLogs: false });
+            process.stdout.write = oldWrite;
+        } catch (err) {
+            assert.equal(err, null);
+        }
+        assert.notEqual(envReplacedConfig, null);
+        assert.equal( logs.includes("No env variable UNIT_TESTS_REDIS_HOS available to replace in config") , true)
+        done();
+    });
+
+    it('error logs are not printed with disableLogs: true', (done) => {
+        process.env.UNIT_TESTS_REDIS_HOST = 'localhost';
+        loadedConfig.edgemicro.redisHost = "<E>UNIT_TESTS_REDIS_HOS</E>"
+        let envReplacedConfig = null;
+        let logs = '';
+        try {
+            var oldWrite = process.stdout.write;
+            process.stdout.write = function(chunk, encoding, callback){
+                logs += chunk.toString(); // chunk is a String or Buffer
+            }
+            envReplacedConfig = replaceEnvTags(loadedConfig, { disableLogs: true });
             process.stdout.write = oldWrite;
         } catch (err) {
             assert.equal(err, null);
         }
         assert.notEqual(envReplacedConfig, null);
         assert.equal( logs.includes("No env variable UNIT_TESTS_REDIS_HOS available to replace in config") , false)
-        done();
-    });
-
-    it('uses writeConsoleLog from options', (done) => {
-        process.env.UNIT_TESTS_REDIS_HOST = 'localhost';
-        loadedConfig.edgemicro.redisHost = "<E>UNIT_TESTS_REDIS_HOS</E>"
-        let envReplacedConfig = null;
-        let isCustomFunctionUsed = false;
-        let writeConsoleLog = () => {
-            isCustomFunctionUsed = true;
-        }
-        try {
-            envReplacedConfig = replaceEnvTags(loadedConfig, { displayLogs: true, writeConsoleLog });
-        } catch (err) {
-            assert.equal(err, null);
-        }
-        assert.notEqual(envReplacedConfig, null);
-        assert.equal( isCustomFunctionUsed, true)
         done();
     });
 
@@ -342,7 +343,7 @@ describe('env-tags-replacer module', () => {
             process.stdout.write = function(chunk, encoding, callback){
                 logs += chunk.toString(); // chunk is a String or Buffer
             }
-            envReplacedConfig = replaceEnvTags(loadedConfig, { displayLogs: true });
+            envReplacedConfig = replaceEnvTags(loadedConfig);
             process.stdout.write = oldWrite;
         } catch (err) {
             assert.equal(err, null);
@@ -362,7 +363,7 @@ describe('env-tags-replacer module', () => {
             process.stdout.write = function(chunk, encoding, callback){
                 logs += chunk.toString(); // chunk is a String or Buffer
             }
-            envReplacedConfig = replaceEnvTags(loadedConfig, { displayLogs: true });
+            envReplacedConfig = replaceEnvTags(loadedConfig);
             process.stdout.write = oldWrite;
         } catch (err) {
             assert.equal(err, null);
@@ -383,7 +384,7 @@ describe('env-tags-replacer module', () => {
             process.stdout.write = function(chunk, encoding, callback){
                 logs += chunk.toString(); // chunk is a String or Buffer
             }
-            envReplacedConfig = replaceEnvTags(loadedConfig, { displayLogs: true });
+            envReplacedConfig = replaceEnvTags(loadedConfig);
             process.stdout.write = oldWrite;
         } catch (err) {
             assert.equal(err, null);
@@ -403,7 +404,7 @@ describe('env-tags-replacer module', () => {
             process.stdout.write = function(chunk, encoding, callback){
                 logs += chunk.toString(); // chunk is a String or Buffer
             }
-            envReplacedConfig = replaceEnvTags(loadedConfig, { displayLogs: true });
+            envReplacedConfig = replaceEnvTags(loadedConfig);
             process.stdout.write = oldWrite;
         } catch (err) {
             assert.equal(err, null);
@@ -423,7 +424,7 @@ describe('env-tags-replacer module', () => {
             process.stdout.write = function(chunk, encoding, callback){
                 logs += chunk.toString(); // chunk is a String or Buffer
             }
-            envReplacedConfig = replaceEnvTags(loadedConfig, { displayLogs: true });
+            envReplacedConfig = replaceEnvTags(loadedConfig);
             process.stdout.write = oldWrite;
         } catch (err) {
             assert.equal(err, null);

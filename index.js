@@ -5,11 +5,12 @@ var network = require('./lib/network');
 var path = require('path');
 var os = require('os')
 const RedisClientLib = require('./lib/redisClient');
-const replaceEnvTags = require('./lib/env-tags-replacer');
+const EnvTagsReplacer = require('./lib/env-tags-replacer');
 
 module.exports = function(){
-  var ioInstance = io();
-  var networkInstance = network();
+  let envTagsReplacerInstance = new EnvTagsReplacer();
+  var ioInstance = io(envTagsReplacerInstance);
+  var networkInstance = network(ioInstance, envTagsReplacerInstance);
   return {
     get:function(options,cb){
       /**
@@ -52,6 +53,7 @@ module.exports = function(){
        */
       ioInstance.setConsoleLogger(consoleLogger);
       networkInstance.setConsoleLogger(consoleLogger);
+      envTagsReplacerInstance.setConsoleLogger(consoleLogger);
     },
     getRedisClient:function(config, cb){
       /**
@@ -65,10 +67,9 @@ module.exports = function(){
        * replaces the env tags in config by the env values
        * @param config object whose <E></E> tags to be replaced with env values.
        * @param options object which has below properties
-       * displayLogs: boolean value, if 'true' console errors and debug logs will be displayed. 
-       * writeConsoleLog: custom function for console logging
+       * disableLogs: boolean value, if 'true' console errors and debug logs will not be displayed. 
        */
-      return replaceEnvTags(config,options)
+      return envTagsReplacerInstance.replaceEnvTags(config,options)
     }
   };
 }();
