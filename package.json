@@ -9,7 +9,7 @@
     "url": "git+https://github.com/apigee/microgateway-config.git"
   },
   "dependencies": {
-    "apigeetool": "^0.14.2",
+    "apigeetool": "^0.15.1",
     "async": "^1.5.2",
     "body-parser": "^1.15.0",
     "config": "^1.19.0",
@@ -17,9 +17,9 @@
     "fs-extra": "^0.26.7",
     "js-yaml": "^3.5.4",
     "lodash": "^4.17.19",
-    "redis": "^2.6.0",
+    "redis": "^3.1.2",
     "request": "^2.87.0",
-    "resolve": "^1.8.1"
+    "resolve": "^1.20.0"
   },
   "scripts": {
     "lint": "eslint  ./lib index.js",
@@ -31,8 +31,8 @@
     "chai": "^2.3.0",
     "eslint": "^6.1.0",
     "eslint-config-google": "^0.13.0",
-    "mocha": "^7.0.0",
-    "nyc": "^14.1.1",
+    "mocha": "^9.0.1",
+    "nyc": "^15.1.0",
     "proxyquire": "^1.7.10",
     "jshint-stylish": "^2.2.1"
   }
