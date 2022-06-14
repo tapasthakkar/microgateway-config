@@ -1,12 +1,12 @@
 {
   "name": "microgateway-config",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "lockfileVersion": 2,
   "requires": true,
   "packages": {
     "": {
       "name": "microgateway-config",
-      "version": "3.3.0",
+      "version": "3.3.1",
       "license": "Apache-2.0",
       "dependencies": {
         "apigeetool": "^0.16.1",
