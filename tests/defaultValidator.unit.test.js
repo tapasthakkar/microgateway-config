@@ -157,7 +157,7 @@ describe('default-validator module', () => {
         try {
             defaultValidator.validate(quotas);
         } catch (err) {
-           flag = err.message.includes('config.quotas.useRedis is not an boolean');
+           flag = err.message.includes('config.quotas.useRedis should be a boolean');
         }
         assert(flag);
         done();
@@ -169,7 +169,7 @@ describe('default-validator module', () => {
         try {
             defaultValidator.validate(quotas);
         } catch (err) {
-           flag = err.message.includes('config.quotas.useRedis is not an boolean');
+           flag = err.message.includes('config.quotas.useRedis should be a boolean');
         }
         assert(flag);
         done();
@@ -187,7 +187,7 @@ describe('default-validator module', () => {
         try {
             defaultValidator.validate(quotas);
         } catch (err) {
-           flag = err.message.includes('config.quotas.useDebugMpId is not an boolean');
+           flag = err.message.includes('config.quotas.useDebugMpId should be a boolean');
         }
         assert(flag);
         done();
@@ -199,7 +199,7 @@ describe('default-validator module', () => {
         try {
             defaultValidator.validate(quotas);
         } catch (err) {
-           flag = err.message.includes('config.quotas.useDebugMpId is not an boolean');
+           flag = err.message.includes('config.quotas.useDebugMpId should be a boolean');
         }
         assert(flag);
         done();
@@ -217,7 +217,7 @@ describe('default-validator module', () => {
         try {
             defaultValidator.validate(quotas);
         } catch (err) {
-           flag = err.message.includes('config.quotas.failOpen is not an boolean');
+           flag = err.message.includes('config.quotas.failOpen should be a boolean');
         }
         assert(flag);
         done();
@@ -229,7 +229,7 @@ describe('default-validator module', () => {
         try {
             defaultValidator.validate(quotas);
         } catch (err) {
-           flag = err.message.includes('config.quotas.failOpen is not an boolean');
+           flag = err.message.includes('config.quotas.failOpen should be a boolean');
         }
         assert(flag);
         done();
