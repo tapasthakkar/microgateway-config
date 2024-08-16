@@ -9,7 +9,7 @@
     "url": "git+https://github.com/apigee/microgateway-config.git"
   },
   "dependencies": {
-    "volos-util-apigee": "0.1.1",
+    "volos-util-apigee": "https://gitpkg.now.sh/apigee-127/volos/util/apigee?master",
     "async": "^2.6.4",
     "body-parser": "^1.15.0",
     "config": "^3.3.9",
