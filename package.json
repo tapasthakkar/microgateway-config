@@ -1,6 +1,6 @@
 {
   "name": "microgateway-config",
-  "version": "3.3.6",
+  "version": "3.3.7",
   "description": "Apigee Microgateway Handler",
   "main": "index.js",
   "license": "Apache-2.0",
@@ -19,7 +19,7 @@
     "postman-request": "^2.88.1-postman.33",
     "redis": "^3.1.2",
     "resolve": "^1.20.0",
-    "volos-util-apigee": "^0.1.3"
+    "volos-util-apigee": "^0.1.4"
   },
   "scripts": {
     "lint": "eslint  ./lib index.js",
@@ -34,6 +34,7 @@
     "jshint-stylish": "^2.2.1",
     "mocha": "^11.1.0",
     "nyc": "^17.1.0",
-    "proxyquire": "^2.1.3"
+    "proxyquire": "^2.1.3",
+    "sinon": "^20.0.0"
   }
 }
